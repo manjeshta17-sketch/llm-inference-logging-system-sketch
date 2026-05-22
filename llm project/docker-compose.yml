@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_PATH=/app/data/inference.db
+      - APP_BASE_URL=http://localhost:8000
+      - LLM_PROVIDER=mock
+    volumes:
+      - app-data:/app/data
+
+volumes:
+  app-data:

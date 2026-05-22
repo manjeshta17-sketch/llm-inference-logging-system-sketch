@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="dashboard-shell">
+  <header class="dashboard-hero">
+    <div>
+      <div class="eyebrow">Operations view</div>
+      <h1>{{ app_name }} observability</h1>
+      <p>Latency, throughput, and error rates extracted from ingestion logs.</p>
+    </div>
+    <a class="ghost-button" href="/">Back to chat</a>
+  </header>
+
+  <section class="metrics-grid" id="summaryCards"></section>
+
+  <section class="dashboard-grid">
+    <article class="chart-card">
+      <div class="panel-title">Throughput by hour</div>
+      <canvas id="throughputChart"></canvas>
+    </article>
+    <article class="chart-card">
+      <div class="panel-title">Provider mix</div>
+      <canvas id="providerChart"></canvas>
+    </article>
+  </section>
+
+  <section class="table-card">
+    <div class="panel-title">Recent logs</div>
+    <div id="recentLogs"></div>
+  </section>
+</div>
+<script src="/static/app.js"></script>
+{% endblock %}

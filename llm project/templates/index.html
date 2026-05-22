@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">L</div>
+      <div>
+        <div class="eyebrow">LLM logging stack</div>
+        <h1>{{ app_name }}</h1>
+      </div>
+    </div>
+
+    <button class="primary-button" id="newConversationButton">New conversation</button>
+
+    <div class="panel-title">Conversations</div>
+    <div id="conversationList" class="conversation-list"></div>
+
+    <div class="meta-card">
+      <div class="meta-label">Provider</div>
+      <div class="meta-value">{{ default_provider }}</div>
+      <div class="meta-label">Model</div>
+      <div class="meta-value">{{ default_model }}</div>
+    </div>
+  </aside>
+
+  <main class="workspace">
+    <header class="hero">
+      <div>
+        <div class="eyebrow">Streaming chat + ingestion</div>
+        <h2>Multi-turn chat with real-time telemetry</h2>
+        <p>
+          Send messages, inspect conversation state, and capture inference metadata through the same app.
+        </p>
+      </div>
+      <a class="ghost-button" href="/dashboard">Open dashboard</a>
+    </header>
+
+    <section class="chat-card">
+      <div class="chat-card-top">
+        <div>
+          <div class="eyebrow">Active conversation</div>
+          <h3 id="conversationTitle">Select or create a thread</h3>
+        </div>
+        <div class="status-pill" id="conversationStatus">idle</div>
+      </div>
+
+      <div id="messages" class="messages"></div>
+
+      <form id="chatForm" class="composer">
+        <textarea id="messageInput" rows="3" placeholder="Ask something and watch the log pipeline update in near real time."></textarea>
+        <div class="composer-actions">
+          <div class="inline-fields">
+            <select id="providerSelect">
+              <option value="mock" {% if default_provider == 'mock' %}selected{% endif %}>mock</option>
+              <option value="openai">openai</option>
+              <option value="anthropic">anthropic</option>
+            </select>
+            <input id="modelInput" value="{{ default_model }}" placeholder="Model name" />
+          </div>
+          <div class="action-row">
+            <button type="button" class="secondary-button" id="resumeButton">Resume</button>
+            <button type="button" class="secondary-button danger" id="cancelButton">Cancel</button>
+            <button type="submit" class="primary-button">Send</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </main>
+</div>
+<script>
+  window.__INITIAL_CONVERSATIONS__ = {{ conversations | tojson }};
+</script>
+<script src="/static/app.js"></script>
+{% endblock %}
